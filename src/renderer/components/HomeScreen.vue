@@ -24,7 +24,7 @@
     <div class="layout-content">
       <Row>
         <Col span="24">
-          <div class="layout-content-main">Content</div>
+          <div class="layout-content-main">{{ $t("message") }}</div>
         </Col>
       </Row>
     </div>
