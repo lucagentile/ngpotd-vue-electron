@@ -3925,6 +3925,12 @@ isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
 
+iview-loader@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/iview-loader/-/iview-loader-1.0.0.tgz#6db81b449a51ae02059616ee9fe209d25e0c8997"
+  dependencies:
+    loader-utils "^1.1.0"
+
 iview@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/iview/-/iview-2.6.0.tgz#5339f0887a8fd5570bcdbde3cb5580ab98eded55"
