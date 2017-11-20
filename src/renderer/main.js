@@ -15,7 +15,11 @@ Vue.use(iView)
 Vue.locale = () => {}
 
 const messages = {
-  en: Object.assign({ message: 'hello' }, en)
+  en: Object.assign({
+    input: {
+      download: 'Download'
+    }
+  }, en)
 }
 
 // Create VueI18n instance with options
