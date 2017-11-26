@@ -18,6 +18,9 @@ const messages = {
   en: Object.assign({
     input: {
       download: 'Download'
+    },
+    modal: {
+      setWallpaper: 'Do you want to set this as a wallpaper?'
     }
   }, en)
 }
