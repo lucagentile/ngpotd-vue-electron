@@ -81,8 +81,10 @@ ipcMain.on('image:url', (event, {imageUrl, date}) => {
 function NotImageException (message) {
   this.message = message
   this.name = 'NotImage'
+  this.stack = (new Error()).stack
 }
-
+NotImageException.prototype = Object.create(Error.prototype)
+NotImageException.prototype.constructor = NotImageException
 /**
  * Auto Updater
  *
