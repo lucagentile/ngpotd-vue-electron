@@ -1,6 +1,9 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
+import axios from 'axios'
+import fs from 'fs'
+import path from 'path'
 
 /**
  * Set `__static` path to static files in production
@@ -20,9 +23,9 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 563,
+    height: 550,
     useContentSize: true,
-    width: 1000
+    width: 400
   })
 
   mainWindow.loadURL(winURL)
@@ -46,6 +49,48 @@ app.on('activate', () => {
   }
 })
 
+/*
+  MainWindow
+ */
+ipcMain.on('image:url', (event, {imageUrl, date}) => {
+  axios.request({
+    responseType: 'arraybuffer',
+    url: imageUrl,
+    method: 'get'
+  }).then(response => {
+    let mimeType = response.headers['content-type']
+    if (mimeType.indexOf('image') === -1) {
+      throw new NotImageException('The imageURL doesn\'t point to an image file')
+    }
+    let ext = mimeType.substr(6, mimeType.length)
+    if (ext === 'jpeg') {
+      ext = 'jpg'
+    }
+    // Images/NGPOTD
+    let picturesPath = app.getPath('pictures') + path.sep + 'NGPOTD'
+    if (!fs.existsSync(picturesPath)) {
+      fs.mkdirSync(picturesPath)
+    }
+    let filenameAndPath = picturesPath + path.sep + date.replace(/-/g, '') + '.' + ext
+    fs.writeFileSync(filenameAndPath, response.data)
+    mainWindow.webContents.send('image:saved', {
+      data: response.data,
+      mimeType
+    })
+  }).catch(error => {
+    console.log(error)
+    // TODO NotImageException should prompt bug notice to me
+    mainWindow.webContents.send('image:error', error.message)
+  })
+})
+
+function NotImageException (message) {
+  this.message = message
+  this.name = 'NotImage'
+  this.stack = (new Error()).stack
+}
+NotImageException.prototype = Object.create(Error.prototype)
+NotImageException.prototype.constructor = NotImageException
 /**
  * Auto Updater
  *

@@ -1,63 +1,87 @@
 <template>
   <div class="layout">
     <Menu mode="horizontal" theme="dark" active-name="1">
-      <div class="layout-logo"></div>
       <div class="layout-nav">
         <MenuItem name="1">
           <Icon type="ios-navigate"></Icon>
-          Item 1
+          Wallpaper
         </MenuItem>
         <MenuItem name="2">
           <Icon type="ios-keypad"></Icon>
-          Item 2
-        </MenuItem>
-        <MenuItem name="3">
-          <Icon type="ios-analytics"></Icon>
-          Item 3
-        </MenuItem>
-        <MenuItem name="4">
-          <Icon type="ios-paper"></Icon>
-          Item 4
+          Images
         </MenuItem>
       </div>
     </Menu>
     <div class="layout-content">
       <Row>
         <Col span="24">
-          <div class="layout-content-main">{{ $t("message") }}</div>
+          <div class="layout-content-main">
+            <Button type="primary" icon="ios-download" @click="startDownload" :disabled="this.isDownloading">{{ $t("input.download") }}</Button>
+          </div>
         </Col>
       </Row>
     </div>
+    <Spin size="large" fix v-if="isDownloading"></Spin>
+    <Modal :value="isDownloaded"
+           title="Common Modal dialog box title"
+           :showHead="false"
+           :maskClosable="false"
+           :closable="false"
+           @on-ok="ok"
+           @on-cancel="cancel">
+      <p>{{ $t("modal.setWallpaper") }}</p>
+      <img :src="imageDownloaded" width="100%">
+    </Modal>
   </div>
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex'
+  import * as types from '../store/types.js'
   export default {
     name: 'home-screen',
     components: {},
+    computed: {
+      ...mapGetters([
+        'isDownloading',
+        'imageDownloaded'
+      ]),
+      isDownloaded: function () {
+        return this.imageDownloaded !== ''
+      }
+    },
     methods: {
+      ...mapActions({
+        startDownload: types.START_DOWNLOAD,
+        stopDownload: types.STOP_DOWNLOAD,
+        setDownloadedImage: types.SET_DOWNLOADED_IMAGE,
+        resetImage: types.RESET_DOWNLOADED_IMAGE
+      }),
+      ok () {
+        console.log('ok')
+      },
+      cancel () {
+        console.log('cancel')
+      }
+    },
+    mounted () {
+      this.$electron.ipcRenderer.on('image:saved', (event, image) => {
+        this.setDownloadedImage(image)
+        this.stopDownload()
+      })
+      this.$electron.ipcRenderer.on('image:error', () => {
+        this.stopDownload()
+      })
     }
   }
 </script>
 
 <style scoped>
   .layout{
-    border: 1px solid #d7dde4;
     background: #f5f7f9;
   }
-  .layout-logo{
-    width: 100px;
-    height: 30px;
-    background: #5b6270;
-    border-radius: 3px;
-    float: left;
-    position: relative;
-    top: 15px;
-    left: 20px;
-  }
   .layout-nav{
-    width: 420px;
-    margin: 0 auto;
+    width: 100%;
   }
   .layout-content{
     min-height: 200px;
