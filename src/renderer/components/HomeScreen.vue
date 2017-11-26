@@ -4,7 +4,7 @@
       <div class="layout-nav">
         <MenuItem name="1">
           <Icon type="ios-navigate"></Icon>
-          Main
+          Wallpaper
         </MenuItem>
         <MenuItem name="2">
           <Icon type="ios-keypad"></Icon>
@@ -15,13 +15,23 @@
     <div class="layout-content">
       <Row>
         <Col span="24">
-        <div class="layout-content-main">
-          <Button type="primary" @click="startDownload" :disabled="this.isDownloading">{{ $t("input.download") }}</Button>
-        </div>
+          <div class="layout-content-main">
+            <Button type="primary" icon="ios-download" @click="startDownload" :disabled="this.isDownloading">{{ $t("input.download") }}</Button>
+          </div>
         </Col>
       </Row>
     </div>
     <Spin size="large" fix v-if="isDownloading"></Spin>
+    <Modal :value="isDownloaded"
+           title="Common Modal dialog box title"
+           :showHead="false"
+           :maskClosable="false"
+           :closable="false"
+           @on-ok="ok"
+           @on-cancel="cancel">
+      <p>{{ $t("modal.setWallpaper") }}</p>
+      <img :src="imageDownloaded" width="100%">
+    </Modal>
   </div>
 </template>
 
@@ -33,17 +43,33 @@
     components: {},
     computed: {
       ...mapGetters([
-        'isDownloading'
-      ])
+        'isDownloading',
+        'imageDownloaded'
+      ]),
+      isDownloaded: function () {
+        return this.imageDownloaded !== ''
+      }
     },
     methods: {
       ...mapActions({
         startDownload: types.START_DOWNLOAD,
-        stopDownload: types.STOP_DOWNLOAD
-      })
+        stopDownload: types.STOP_DOWNLOAD,
+        setDownloadedImage: types.SET_DOWNLOADED_IMAGE,
+        resetImage: types.RESET_DOWNLOADED_IMAGE
+      }),
+      ok () {
+        console.log('ok')
+      },
+      cancel () {
+        console.log('cancel')
+      }
     },
     mounted () {
-      this.$electron.ipcRenderer.on('image:saved', (event, data) => {
+      this.$electron.ipcRenderer.on('image:saved', (event, image) => {
+        this.setDownloadedImage(image)
+        this.stopDownload()
+      })
+      this.$electron.ipcRenderer.on('image:error', () => {
         this.stopDownload()
       })
     }

@@ -4,12 +4,16 @@ import { ipcRenderer } from 'electron'
 
 const state = {
   isDownloading: false,
+  imageDownloaded: '',
   url: 'https://www.nationalgeographic.com/photography/photo-of-the-day/'
 }
 
 const getters = {
   isDownloading: (state) => {
     return state.isDownloading
+  },
+  imageDownloaded: (state) => {
+    return state.imageDownloaded
   }
 }
 
@@ -19,6 +23,9 @@ const mutations = {
   },
   [types.STOP_DOWNLOAD] (state) {
     state.isDownloading = false
+  },
+  [types.SET_DOWNLOADED_IMAGE] (state, imageUrl) {
+    state.imageDownloaded = imageUrl
   }
 }
 
@@ -38,6 +45,16 @@ const actions = {
   },
   [types.STOP_DOWNLOAD] ({ commit }) {
     commit(types.STOP_DOWNLOAD)
+  },
+  [types.SET_DOWNLOADED_IMAGE] ({ commit }, image) {
+    let arrayBufferView = new Uint8Array(image.data)
+    let blob = new Blob([ arrayBufferView ], { type: image.mimeType })
+    let urlCreator = window.URL || window.webkitURL
+    let imageUrl = urlCreator.createObjectURL(blob)
+    commit(types.SET_DOWNLOADED_IMAGE, imageUrl)
+  },
+  [types.RESET_DOWNLOADED_IMAGE] ({commit}) {
+    commit(types.SET_DOWNLOADED_IMAGE, '')
   }
 }
 

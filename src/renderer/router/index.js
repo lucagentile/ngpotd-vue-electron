@@ -7,7 +7,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home-scren',
+      name: 'home-screen',
       component: require('@/components/HomeScreen').default
     },
     {

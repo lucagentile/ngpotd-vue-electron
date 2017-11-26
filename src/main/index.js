@@ -23,9 +23,9 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 563,
+    height: 550,
     useContentSize: true,
-    width: 1000
+    width: 400
   })
 
   mainWindow.loadURL(winURL)
@@ -49,6 +49,9 @@ app.on('activate', () => {
   }
 })
 
+/*
+  MainWindow
+ */
 ipcMain.on('image:url', (event, {imageUrl, date}) => {
   axios.request({
     responseType: 'arraybuffer',
@@ -70,7 +73,10 @@ ipcMain.on('image:url', (event, {imageUrl, date}) => {
     }
     let filenameAndPath = picturesPath + path.sep + date.replace(/-/g, '') + '.' + ext
     fs.writeFileSync(filenameAndPath, response.data)
-    mainWindow.webContents.send('image:saved')
+    mainWindow.webContents.send('image:saved', {
+      data: response.data,
+      mimeType
+    })
   }).catch(error => {
     console.log(error)
     // TODO NotImageException should prompt bug notice to me

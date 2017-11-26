@@ -1,2 +1,5 @@
 export const START_DOWNLOAD = 'downloader/START_DOWNLOAD'
 export const STOP_DOWNLOAD = 'downloader/STOP_DOWNLOAD'
+export const SET_IS_DOWNLOADED = 'downloader/SET_IS_DOWNLOADED'
+export const SET_DOWNLOADED_IMAGE = 'downloader/SET_DOWNLOADED_IMAGE'
+export const RESET_DOWNLOADED_IMAGE = 'downloader/RESET_DOWNLOADED_IMAGE'
