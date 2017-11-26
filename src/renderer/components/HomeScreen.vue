@@ -15,34 +15,37 @@
     <div class="layout-content">
       <Row>
         <Col span="24">
-          <div class="layout-content-main">
-            <Button type="primary" @click="downloadImage">{{ $t("input.download") }}</Button>
-          </div>
+        <div class="layout-content-main">
+          <Button type="primary" @click="startDownload" :disabled="this.isDownloading">{{ $t("input.download") }}</Button>
+        </div>
         </Col>
       </Row>
     </div>
+    <Spin size="large" fix v-if="isDownloading"></Spin>
   </div>
 </template>
 
 <script>
-  import axios from 'axios'
-  import { ipcRenderer } from 'electron'
+  import { mapGetters, mapActions } from 'vuex'
+  import * as types from '../store/types.js'
   export default {
     name: 'home-screen',
     components: {},
+    computed: {
+      ...mapGetters([
+        'isDownloading'
+      ])
+    },
     methods: {
-      downloadImage: () => {
-        const url = 'https://www.nationalgeographic.com/photography/photo-of-the-day/'
-        axios.get(url).then(({data}) => {
-          const parser = new DOMParser()
-          const htmlDoc = parser.parseFromString(data, 'text/html')
-          const imageUrl = htmlDoc.querySelector('meta[property="og:image"]').content
-          const date = htmlDoc.querySelector('meta[property="gsa_publish_date"]').content
-          ipcRenderer.send('image:url', {imageUrl, date})
-        }).catch((error) => {
-          console.log(error)
-        })
-      }
+      ...mapActions({
+        startDownload: types.START_DOWNLOAD,
+        stopDownload: types.STOP_DOWNLOAD
+      })
+    },
+    mounted () {
+      this.$electron.ipcRenderer.on('image:saved', (event, data) => {
+        this.stopDownload()
+      })
     }
   }
 </script>

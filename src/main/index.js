@@ -60,6 +60,9 @@ ipcMain.on('image:url', (event, {imageUrl, date}) => {
       throw new NotImageException('The imageURL doesn\'t point to an image file')
     }
     let ext = mimeType.substr(6, mimeType.length)
+    if (ext === 'jpeg') {
+      ext = 'jpg'
+    }
     // Images/NGPOTD
     let picturesPath = app.getPath('pictures') + path.sep + 'NGPOTD'
     if (!fs.existsSync(picturesPath)) {
@@ -67,9 +70,11 @@ ipcMain.on('image:url', (event, {imageUrl, date}) => {
     }
     let filenameAndPath = picturesPath + path.sep + date.replace(/-/g, '') + '.' + ext
     fs.writeFileSync(filenameAndPath, response.data)
+    mainWindow.webContents.send('image:saved')
   }).catch(error => {
     console.log(error)
     // TODO NotImageException should prompt bug notice to me
+    mainWindow.webContents.send('image:error', error.message)
   })
 })
 
