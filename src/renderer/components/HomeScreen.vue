@@ -58,10 +58,10 @@
         resetImage: types.RESET_DOWNLOADED_IMAGE
       }),
       ok () {
-        console.log('ok')
+        this.resetImage()
       },
       cancel () {
-        console.log('cancel')
+        this.resetImage()
       }
     },
     mounted () {
