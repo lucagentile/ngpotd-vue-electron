@@ -1,26 +1,12 @@
 <template>
-  <div class="layout">
-    <Menu mode="horizontal" theme="dark" active-name="1">
-      <div class="layout-nav">
-        <MenuItem name="1">
-          <Icon type="ios-navigate"></Icon>
-          Wallpaper
-        </MenuItem>
-        <MenuItem name="2">
-          <Icon type="ios-keypad"></Icon>
-          {{ $t("menu.images") }}
-        </MenuItem>
-      </div>
-    </Menu>
-    <div class="layout-content">
-      <Row>
-        <Col span="24">
-          <div class="layout-content-main">
-            <Button type="primary" icon="ios-download" @click="startDownload" :disabled="this.isDownloading">{{ $t("input.download") }}</Button>
-          </div>
-        </Col>
-      </Row>
-    </div>
+  <div>
+    <Row>
+      <Col span="24">
+        <div class="layout-content-main">
+          <Button type="primary" icon="ios-download" @click="startDownload" :disabled="this.isDownloading">{{ $t("input.download") }}</Button>
+        </div>
+      </Col>
+    </Row>
     <Spin size="large" fix v-if="isDownloading"></Spin>
     <Modal :value="isDownloaded"
            :showHead="false"
@@ -40,7 +26,7 @@
   import { mapGetters, mapActions } from 'vuex'
   import * as types from '../store/types.js'
   export default {
-    name: 'home-screen',
+    name: 'wallpaper-screen',
     components: {},
     computed: {
       ...mapGetters([
@@ -78,14 +64,6 @@
 </script>
 
 <style scoped>
-  .layout-nav{
-    width: 100%;
-  }
-  .layout-content{
-    min-height: 200px;
-    height: 100%;
-    margin: 15px;
-  }
   .layout-content-main{
     padding: 10px;
   }

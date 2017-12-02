@@ -18,7 +18,8 @@ Vue.locale = () => {}
 const messages = {
   en: Object.assign({
     menu: {
-      images: 'Images'
+      images: 'Images',
+      wallpaper: 'Wallpaper'
     },
     input: {
       download: 'Download'
@@ -29,7 +30,8 @@ const messages = {
   }, en),
   it: Object.assign({
     menu: {
-      images: 'Immagini'
+      images: 'Immagini',
+      wallpaper: 'Sfondo'
     },
     input: {
       download: 'Scarica'
