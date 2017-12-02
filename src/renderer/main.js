@@ -8,6 +8,7 @@ import store from './store'
 import VueI18n from 'vue-i18n'
 import iView from 'iview'
 import en from 'iview/dist/locale/en-US'
+import it from 'iview/dist/locale/it-IT'
 import 'iview/dist/styles/iview.css'
 
 Vue.use(VueI18n)
@@ -16,13 +17,29 @@ Vue.locale = () => {}
 
 const messages = {
   en: Object.assign({
+    menu: {
+      images: 'Images',
+      wallpaper: 'Wallpaper'
+    },
     input: {
       download: 'Download'
     },
     modal: {
-      setWallpaper: 'Do you want to set this as a wallpaper?'
+      setWallpaper: 'Do you want to set this image as a wallpaper?'
     }
-  }, en)
+  }, en),
+  it: Object.assign({
+    menu: {
+      images: 'Immagini',
+      wallpaper: 'Sfondo'
+    },
+    input: {
+      download: 'Scarica'
+    },
+    modal: {
+      setWallpaper: 'Vuoi questa immagine come sfondo del desktop?'
+    }
+  }, it)
 }
 
 // Create VueI18n instance with options
