@@ -1,5 +1,5 @@
 # National Geographic Photo of the Day
-##Work in Progress
+## Work in Progress
 > Download and set the National Geographic Photo of the Day as your wallpaper
 
 > Made with Electron-vue
