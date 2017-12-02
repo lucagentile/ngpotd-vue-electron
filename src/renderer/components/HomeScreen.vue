@@ -8,7 +8,7 @@
         </MenuItem>
         <MenuItem name="2">
           <Icon type="ios-keypad"></Icon>
-          Images
+          {{ $t("menu.images") }}
         </MenuItem>
       </div>
     </Menu>
@@ -23,10 +23,11 @@
     </div>
     <Spin size="large" fix v-if="isDownloading"></Spin>
     <Modal :value="isDownloaded"
-           title="Common Modal dialog box title"
            :showHead="false"
            :maskClosable="false"
            :closable="false"
+           ok-text="Ok"
+           cancel-text="No"
            @on-ok="ok"
            @on-cancel="cancel">
       <p>{{ $t("modal.setWallpaper") }}</p>
@@ -77,9 +78,6 @@
 </script>
 
 <style scoped>
-  .layout{
-    background: #f5f7f9;
-  }
   .layout-nav{
     width: 100%;
   }
@@ -87,9 +85,6 @@
     min-height: 200px;
     height: 100%;
     margin: 15px;
-    overflow: hidden;
-    background: #fff;
-    border-radius: 4px;
   }
   .layout-content-main{
     padding: 10px;
