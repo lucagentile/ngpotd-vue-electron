@@ -6,7 +6,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/wallpaper/',
       name: 'wallpaper-screen',
       component: require('@/components/WallpaperScreen').default
     },
@@ -14,6 +14,10 @@ export default new Router({
       path: '/images/',
       name: 'images-screen',
       component: require('@/components/ImagesScreen').default
+    },
+    {
+      path: '/',
+      redirect: '/wallpaper/'
     },
     {
       path: '*',

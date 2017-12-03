@@ -1,12 +1,23 @@
 <template>
   <div>
-    <p>test</p>
+    <Row type="flex">
+      <Col span="8" v-for="imageUrl in getImages">
+        <img :src="imageUrl" width="100%">
+      </Col>
+    </Row>
   </div>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
+  import * as types from '../store/types.js'
   export default {
-    name: 'images-screen'
+    name: 'images-screen',
+    computed: {
+      ...mapGetters({
+        getImages: types.GET_IMAGES
+      })
+    }
   }
 </script>
 
