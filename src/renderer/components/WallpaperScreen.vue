@@ -8,17 +8,6 @@
       </Col>
     </Row>
     <Spin size="large" fix v-if="isDownloading"></Spin>
-    <Modal :value="isDownloaded"
-           :showHead="false"
-           :maskClosable="false"
-           :closable="false"
-           ok-text="Ok"
-           cancel-text="No"
-           @on-ok="ok"
-           @on-cancel="cancel">
-      <p>{{ $t("modal.setWallpaper") }}</p>
-      <img :src="imageDownloaded" width="100%">
-    </Modal>
   </div>
 </template>
 
@@ -27,37 +16,14 @@
   import * as types from '../store/types.js'
   export default {
     name: 'wallpaper-screen',
-    components: {},
     computed: {
-      ...mapGetters([
-        'isDownloading',
-        'imageDownloaded'
-      ]),
-      isDownloaded: function () {
-        return this.imageDownloaded !== ''
-      }
+      ...mapGetters({
+        isDownloading: types.GET_IS_DOWNLOADING
+      })
     },
     methods: {
       ...mapActions({
-        startDownload: types.START_DOWNLOAD,
-        stopDownload: types.STOP_DOWNLOAD,
-        setDownloadedImage: types.SET_DOWNLOADED_IMAGE,
-        resetImage: types.RESET_DOWNLOADED_IMAGE
-      }),
-      ok () {
-        this.resetImage()
-      },
-      cancel () {
-        this.resetImage()
-      }
-    },
-    mounted () {
-      this.$electron.ipcRenderer.on('image:saved', (event, image) => {
-        this.setDownloadedImage(image)
-        this.stopDownload()
-      })
-      this.$electron.ipcRenderer.on('image:error', () => {
-        this.stopDownload()
+        startDownload: types.START_DOWNLOAD
       })
     }
   }

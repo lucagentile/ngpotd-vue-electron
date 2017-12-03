@@ -74,9 +74,11 @@ ipcMain.on('image:url', (event, {imageUrl, date}) => {
     if (!fs.existsSync(picturesPath)) {
       fs.mkdirSync(picturesPath)
     }
-    let filenameAndPath = picturesPath + path.sep + date.replace(/-/g, '') + '.' + ext
+    let filename = date.replace(/-/g, '') + '.' + ext
+    let filenameAndPath = picturesPath + path.sep + filename
     fs.writeFileSync(filenameAndPath, response.data)
     mainWindow.webContents.send('image:saved', {
+      name: filename,
       data: response.data,
       mimeType
     })
@@ -105,6 +107,7 @@ ipcMain.on('image:index', (event) => {
       let imagePath = picturesPath + path.sep + items[i]
       let data = fs.readFileSync(imagePath)
       let image = {
+        name: items[i],
         data,
         mimeType: imageType(data).mime
       }
