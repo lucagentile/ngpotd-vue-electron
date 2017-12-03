@@ -5,6 +5,7 @@ import axios from 'axios'
 import fs from 'fs'
 import path from 'path'
 import imageType from 'image-type'
+import wallpaper from 'wallpaper'
 
 /**
  * Set `__static` path to static files in production
@@ -114,6 +115,14 @@ ipcMain.on('image:index', (event) => {
       images.push(image)
     }
     mainWindow.webContents.send('image:push', images)
+  })
+})
+
+ipcMain.on('wallpaper:set', (event, image) => {
+  wallpaper.set(picturesPath + path.sep + image.name).then(() => {
+    mainWindow.webContents.send('wallpaper:success')
+  }).catch(() => {
+    mainWindow.webContents.send('wallpaper:error')
   })
 })
 

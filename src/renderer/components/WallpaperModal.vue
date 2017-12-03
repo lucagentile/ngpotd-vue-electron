@@ -33,7 +33,7 @@
         stopDownload: types.STOP_DOWNLOAD
       }),
       setWallpaper () {
-        this.$electron.ipcRenderer.send('wallpaper:set')
+        this.$electron.ipcRenderer.send('wallpaper:set', this.imageToSet)
         this.closeModal()
       },
       dontSetWallpaper () {
@@ -48,7 +48,11 @@
         this.setImageToSet(image)
         this.stopDownload()
       })
-      this.$electron.ipcRenderer.on('image:error', () => {
+      this.$electron.ipcRenderer.on('wallpaper:success', () => {
+        this.$Message.success(this.i18n('message.wallpaperSuccess'))
+      })
+      this.$electron.ipcRenderer.on('image:error, wallpaper:error', () => {
+        this.$Message.error(this.i18n('message.wallpaperError'))
         this.stopDownload()
       })
     }
