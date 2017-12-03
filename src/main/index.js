@@ -4,6 +4,7 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import axios from 'axios'
 import fs from 'fs'
 import path from 'path'
+import imageType from 'image-type'
 
 /**
  * Set `__static` path to static files in production
@@ -14,6 +15,9 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 let mainWindow
+
+let picturesPath = app.getPath('pictures') + path.sep + 'NGPOTD'
+
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
@@ -67,7 +71,6 @@ ipcMain.on('image:url', (event, {imageUrl, date}) => {
       ext = 'jpg'
     }
     // Images/NGPOTD
-    let picturesPath = app.getPath('pictures') + path.sep + 'NGPOTD'
     if (!fs.existsSync(picturesPath)) {
       fs.mkdirSync(picturesPath)
     }
@@ -91,6 +94,26 @@ function NotImageException (message) {
 }
 NotImageException.prototype = Object.create(Error.prototype)
 NotImageException.prototype.constructor = NotImageException
+
+ipcMain.on('image:index', (event) => {
+  fs.readdir(picturesPath, (err, items) => {
+    if (err) {
+      console.log(err)
+    }
+    let images = []
+    for (let i = 0; i < items.length; i++) {
+      let imagePath = picturesPath + path.sep + items[i]
+      let data = fs.readFileSync(imagePath)
+      let image = {
+        data,
+        mimeType: imageType(data).mime
+      }
+      images.push(image)
+    }
+    mainWindow.webContents.send('image:push', images)
+  })
+})
+
 /**
  * Auto Updater
  *
