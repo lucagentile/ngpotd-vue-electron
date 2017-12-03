@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Row type="flex" class="code-row-bg">
-      <Col span="3" v-for="imageUrl in getImages">
+    <Row type="flex">
+      <Col span="8" v-for="imageUrl in getImages">
         <img :src="imageUrl" width="100%">
       </Col>
     </Row>
@@ -9,24 +9,13 @@
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex'
+  import { mapGetters } from 'vuex'
   import * as types from '../store/types.js'
   export default {
     name: 'images-screen',
     computed: {
       ...mapGetters({
         getImages: types.GET_IMAGES
-      })
-    },
-    methods: {
-      ...mapActions({
-        pushImage: types.PUSH_IMAGE
-      })
-    },
-    beforeCreate () {
-      this.$electron.ipcRenderer.send('image:index')
-      this.$electron.ipcRenderer.on('image:push', (event, image) => {
-        this.pushImage(image)
       })
     }
   }
