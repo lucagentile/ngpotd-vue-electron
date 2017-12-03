@@ -1,33 +1,40 @@
 <template>
   <div>
     <Row type="flex">
-      <Col span="8" v-for="imageUrl in getImages">
-        <img :src="imageUrl" width="100%">
+      <Col span="8" v-for="image in images" :key="image.name">
+        <img :src="image.url" width="100%" v-on:click="askToSetWallpaper" :data-name="image.name">
       </Col>
     </Row>
+    <Spin size="large" fix v-if="isSettingWallpaper"></Spin>
   </div>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   import * as types from '../store/types.js'
   export default {
     name: 'images-screen',
+    data () {
+      return {
+        isSettingWallpaper: false
+      }
+    },
     computed: {
       ...mapGetters({
-        getImages: types.GET_IMAGES
+        images: types.GET_IMAGES
       })
+    },
+    methods: {
+      ...mapActions({
+        setImageToSet: types.SET_IMAGE_TO_SET,
+        setImageFromName: types.SET_IMAGE_FROM_NAME
+      }),
+      askToSetWallpaper (event) {
+        this.setImageFromName(event.target.getAttribute('data-name'))
+      }
     }
   }
 </script>
 
 <style scoped>
-  .layout-content-main{
-    padding: 10px;
-  }
-  .layout-copy{
-    text-align: center;
-    padding: 10px 0 20px;
-    color: #9ea7b4;
-  }
 </style>

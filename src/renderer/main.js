@@ -26,6 +26,10 @@ const messages = {
     },
     modal: {
       setWallpaper: 'Do you want to set this image as a wallpaper?'
+    },
+    message: {
+      wallpaperSuccess: 'Wallpaper has been set',
+      wallpaperError: 'An error has occured. Retry'
     }
   }, en),
   it: Object.assign({
@@ -38,6 +42,10 @@ const messages = {
     },
     modal: {
       setWallpaper: 'Vuoi questa immagine come sfondo del desktop?'
+    },
+    message: {
+      wallpaperSuccess: 'Lo sfondo è stato impostato',
+      wallpaperError: 'Si è verificato un errore. Riprova'
     }
   }, it)
 }

@@ -15,12 +15,14 @@
     <div class="layout-content">
       <router-view></router-view>
     </div>
+    <wallpaper-modal></wallpaper-modal>
   </div>
 </template>
 
 <script>
   import { mapActions } from 'vuex'
   import * as types from './store/types.js'
+  import WallpaperModal from './components/WallpaperModal'
   export default {
     name: 'ngpotd-electron-vue',
     methods: {
@@ -41,6 +43,9 @@
       this.$electron.ipcRenderer.on('image:push', (event, image) => {
         this.pushImage(image)
       })
+    },
+    components: {
+      WallpaperModal
     }
   }
 </script>

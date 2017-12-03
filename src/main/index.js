@@ -5,6 +5,7 @@ import axios from 'axios'
 import fs from 'fs'
 import path from 'path'
 import imageType from 'image-type'
+import wallpaper from 'wallpaper'
 
 /**
  * Set `__static` path to static files in production
@@ -74,9 +75,11 @@ ipcMain.on('image:url', (event, {imageUrl, date}) => {
     if (!fs.existsSync(picturesPath)) {
       fs.mkdirSync(picturesPath)
     }
-    let filenameAndPath = picturesPath + path.sep + date.replace(/-/g, '') + '.' + ext
+    let filename = date.replace(/-/g, '') + '.' + ext
+    let filenameAndPath = picturesPath + path.sep + filename
     fs.writeFileSync(filenameAndPath, response.data)
     mainWindow.webContents.send('image:saved', {
+      name: filename,
       data: response.data,
       mimeType
     })
@@ -105,12 +108,21 @@ ipcMain.on('image:index', (event) => {
       let imagePath = picturesPath + path.sep + items[i]
       let data = fs.readFileSync(imagePath)
       let image = {
+        name: items[i],
         data,
         mimeType: imageType(data).mime
       }
       images.push(image)
     }
     mainWindow.webContents.send('image:push', images)
+  })
+})
+
+ipcMain.on('wallpaper:set', (event, image) => {
+  wallpaper.set(picturesPath + path.sep + image.name).then(() => {
+    mainWindow.webContents.send('wallpaper:success')
+  }).catch(() => {
+    mainWindow.webContents.send('wallpaper:error')
   })
 })
 
