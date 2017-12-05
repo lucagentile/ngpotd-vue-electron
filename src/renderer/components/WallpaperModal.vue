@@ -49,10 +49,10 @@
         this.stopDownload()
       })
       this.$electron.ipcRenderer.on('wallpaper:success', () => {
-        this.$Message.success(this.i18n('message.wallpaperSuccess'))
+        this.$Message.success(this.$t('message.wallpaperSuccess'))
       })
       this.$electron.ipcRenderer.on('image:error, wallpaper:error', () => {
-        this.$Message.error(this.i18n('message.wallpaperError'))
+        this.$Message.error(this.$t('message.wallpaperError'))
         this.stopDownload()
       })
     }
