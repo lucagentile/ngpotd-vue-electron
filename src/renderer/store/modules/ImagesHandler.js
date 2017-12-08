@@ -1,4 +1,5 @@
 import * as types from '../types'
+import { createImage } from '../../helpers'
 
 const state = {
   images: [],
@@ -26,27 +27,13 @@ const mutations = {
 const actions = {
   [types.PUSH_IMAGE] ({ commit }, images) {
     images = images.map((image) => {
-      let arrayBufferView = new Uint8Array(image.data)
-      let blob = new Blob([ arrayBufferView ], { type: image.mimeType })
-      let urlCreator = window.URL || window.webkitURL
-      return {
-        name: image.name,
-        url: urlCreator.createObjectURL(blob),
-        mimeType: image.mimeType
-      }
+      return createImage(image)
     })
     commit(types.PUSH_IMAGE, images)
   },
   [types.SET_IMAGE_TO_SET] ({ commit }, image) {
     if (image.hasOwnProperty('data')) {
-      let arrayBufferView = new Uint8Array(image.data)
-      let blob = new Blob([ arrayBufferView ], { type: image.mimeType })
-      let urlCreator = window.URL || window.webkitURL
-      image = {
-        name: image.name,
-        url: urlCreator.createObjectURL(blob),
-        mimeType: image.mimeType
-      }
+      image = createImage(image)
     }
     commit(types.SET_IMAGE_TO_SET, image)
   },

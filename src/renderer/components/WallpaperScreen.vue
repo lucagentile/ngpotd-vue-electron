@@ -7,7 +7,6 @@
         </div>
       </Col>
     </Row>
-    <Spin size="large" fix v-if="isDownloading"></Spin>
   </div>
 </template>
 

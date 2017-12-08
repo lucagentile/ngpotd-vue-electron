@@ -16,15 +16,21 @@
       <router-view></router-view>
     </div>
     <wallpaper-modal></wallpaper-modal>
+    <Spin size="large" fix v-if="isDownloading"></Spin>
   </div>
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   import * as types from './store/types.js'
   import WallpaperModal from './components/WallpaperModal'
   export default {
     name: 'ngpotd-electron-vue',
+    computed: {
+      ...mapGetters({
+        isDownloading: types.GET_IS_DOWNLOADING
+      })
+    },
     methods: {
       ...mapActions({
         pushImage: types.PUSH_IMAGE
