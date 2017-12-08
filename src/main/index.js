@@ -126,6 +126,12 @@ ipcMain.on('wallpaper:set', (event, image) => {
   })
 })
 
+fs.watch(picturesPath, { encoding: 'buffer' }, (eventType, filename) => {
+  if (eventType) {
+    ipcMain.emit('image:index')
+  }
+})
+
 /**
  * Auto Updater
  *
