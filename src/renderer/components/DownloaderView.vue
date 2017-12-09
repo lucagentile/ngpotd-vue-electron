@@ -1,12 +1,6 @@
 <template>
-  <div>
-    <Row>
-      <Col span="24">
-        <div class="layout-content-main">
-          <Button type="primary" @click="startDownload" :disabled="this.isDownloading" size="large">{{ $t("input.download") }}</Button>
-        </div>
-      </Col>
-    </Row>
+  <div class="mg-rx-40">
+    <Button type="primary" @click="startDownload" :disabled="this.isDownloading" size="large">{{ $t("input.download") }}</Button>
   </div>
 </template>
 
@@ -29,7 +23,4 @@
 </script>
 
 <style scoped>
-  .layout-content-main{
-    padding: 10px;
-  }
 </style>

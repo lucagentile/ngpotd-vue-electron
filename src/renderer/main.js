@@ -11,7 +11,9 @@ import en from 'iview/dist/locale/en-US'
 import it from 'iview/dist/locale/it-IT'
 import 'iview/dist/styles/iview.css'
 import './theme/ngpotd-iview-theme.less'
+import VueMasonry from 'vue-masonry-css'
 
+Vue.use(VueMasonry)
 Vue.use(VueI18n)
 Vue.use(iView)
 Vue.locale = () => {}
@@ -21,6 +23,8 @@ const messages = {
     menu: {
       images: 'Images',
       wallpaper: 'Wallpaper'
+    section: {
+      gallery: 'Gallery'
     },
     input: {
       download: 'Download'
@@ -37,6 +41,8 @@ const messages = {
     menu: {
       images: 'Immagini',
       wallpaper: 'Sfondo'
+    section: {
+      gallery: 'Galleria'
     },
     input: {
       download: 'Scarica'
