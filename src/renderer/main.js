@@ -10,6 +10,7 @@ import iView from 'iview'
 import en from 'iview/dist/locale/en-US'
 import it from 'iview/dist/locale/it-IT'
 import 'iview/dist/styles/iview.css'
+import './theme/ngpotd-iview-theme.less'
 
 Vue.use(VueI18n)
 Vue.use(iView)

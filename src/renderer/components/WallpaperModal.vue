@@ -8,7 +8,6 @@
        cancel-text="No"
        @on-ok="setWallpaper"
        @on-cancel="dontSetWallpaper">
-      <p>{{ $t("modal.setWallpaper") }}</p>
       <img :src="imageToSet.url" width="100%">
     </Modal>
   </div>

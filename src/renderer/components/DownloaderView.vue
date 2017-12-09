@@ -3,7 +3,7 @@
     <Row>
       <Col span="24">
         <div class="layout-content-main">
-          <Button type="primary" icon="ios-download" @click="startDownload" :disabled="this.isDownloading">{{ $t("input.download") }}</Button>
+          <Button type="primary" @click="startDownload" :disabled="this.isDownloading" size="large">{{ $t("input.download") }}</Button>
         </div>
       </Col>
     </Row>
