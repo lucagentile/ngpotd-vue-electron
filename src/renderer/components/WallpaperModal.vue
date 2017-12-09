@@ -1,14 +1,14 @@
 <template>
   <div>
     <Modal :value="showModal"
-       :showHead="false"
-       :maskClosable="false"
-       :closable="false"
-       ok-text="Ok"
-       cancel-text="No"
-       @on-ok="setWallpaper"
-       @on-cancel="dontSetWallpaper">
-      <p>{{ $t("modal.setWallpaper") }}</p>
+           :showHead="false"
+           :maskClosable="false"
+           :closable="false"
+           ok-text="Ok"
+           cancel-text="No"
+           @on-ok="setWallpaper"
+           @on-cancel="dontSetWallpaper"
+           class-name="vertical-center-modal">
       <img :src="imageToSet.url" width="100%">
     </Modal>
   </div>
@@ -59,5 +59,5 @@
   }
 </script>
 
-<style scoped>
+<style>
 </style>

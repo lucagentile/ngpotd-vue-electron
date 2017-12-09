@@ -1,0 +1,59 @@
+@import '~iview/src/styles/index.less';
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
+
+@font-family            : 'Josefin Sans', Helvetica, sans-serif;
+@primary-color          : #ffce00;
+@body-background        : #222222;
+
+@border-radius-base     : 0px;
+@border-radius-small    : 0px;
+
+@btn-primary-color      : @body-background;
+@btn-font-size-large    : 18px;
+@btn-border-radius      : 0px;
+@btn-border-radius-small: 0px;
+@btn-padding-large      : 31px 15px 28px 15px;
+
+@tooltip-bg             : @body-background;
+
+html,body {
+  height: 100%;
+}
+div {
+  line-height: 0;
+}
+.@{btn-prefix-cls} {
+  margin: 0;
+  font-weight: 600;
+  padding: 1.0625rem 2.125rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  word-spacing: .05em;
+  font-size: .875rem;
+  transition: 400ms;
+  line-height: 1.2;
+}
+.@{modal-prefix-cls} {
+  &-body {
+    padding: 0;
+    line-height: 0;
+  }
+  &-footer {
+    border: none;
+    text-align: center;
+  }
+}
+
+.vertical-center-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .@{modal-prefix-cls} {
+    top: 0;
+  }
+}
+.@{spin-prefix-cls} {
+  &-fix {
+    background-color: rgba(0,0,0,.9);
+  }
+}

@@ -10,22 +10,22 @@ import iView from 'iview'
 import en from 'iview/dist/locale/en-US'
 import it from 'iview/dist/locale/it-IT'
 import 'iview/dist/styles/iview.css'
+import './theme/ngpotd-iview-theme.less'
+import './theme/ngpotd-theme.less'
+import VueMasonry from 'vue-masonry-css'
 
+Vue.use(VueMasonry)
 Vue.use(VueI18n)
 Vue.use(iView)
 Vue.locale = () => {}
 
 const messages = {
   en: Object.assign({
-    menu: {
-      images: 'Images',
-      wallpaper: 'Wallpaper'
+    section: {
+      gallery: 'Gallery'
     },
     input: {
       download: 'Download'
-    },
-    modal: {
-      setWallpaper: 'Do you want to set this image as a wallpaper?'
     },
     message: {
       wallpaperSuccess: 'Wallpaper has been set',
@@ -33,15 +33,11 @@ const messages = {
     }
   }, en),
   it: Object.assign({
-    menu: {
-      images: 'Immagini',
-      wallpaper: 'Sfondo'
+    section: {
+      gallery: 'Galleria'
     },
     input: {
       download: 'Scarica'
-    },
-    modal: {
-      setWallpaper: 'Vuoi questa immagine come sfondo del desktop?'
     },
     message: {
       wallpaperSuccess: 'Lo sfondo è stato impostato',

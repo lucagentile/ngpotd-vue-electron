@@ -1,24 +1,27 @@
 <template>
   <div>
-    <Row type="flex">
-      <Col span="8" v-for="image in images" :key="image.name">
-        <img :src="image.url" width="100%" v-on:click="askToSetWallpaper" :data-name="image.name">
+    <Row type="flex" class="ng-margin">
+      <Col span="12">
+        <h1 class="section-title">{{ $t("section.gallery") }}</h1>
+      </Col>
+      <Col span="12" class="align-right">
+        <downloader-view></downloader-view>
       </Col>
     </Row>
-    <Spin size="large" fix v-if="isSettingWallpaper"></Spin>
+    <masonry :cols="3" :gutter="0">
+      <div v-for="(image, index) in images" :key="index">
+        <img :src="image.url" width="100%" v-on:click="askToSetWallpaper" :data-name="image.name">
+      </div>
+    </masonry>
   </div>
 </template>
 
 <script>
   import { mapGetters, mapActions } from 'vuex'
   import * as types from '../store/types.js'
+  import DownloaderView from './DownloaderView'
   export default {
-    name: 'images-screen',
-    data () {
-      return {
-        isSettingWallpaper: false
-      }
-    },
+    name: 'images-view',
     computed: {
       ...mapGetters({
         images: types.GET_IMAGES
@@ -32,6 +35,9 @@
       askToSetWallpaper (event) {
         this.setImageFromName(event.target.getAttribute('data-name'))
       }
+    },
+    components: {
+      DownloaderView
     }
   }
 </script>
