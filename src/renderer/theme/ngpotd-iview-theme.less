@@ -2,9 +2,9 @@
 @import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
 
 @font-family            : 'Josefin Sans', Helvetica, sans-serif;
-
 @primary-color          : #ffce00;
 @body-background        : #222222;
+
 @border-radius-base     : 0px;
 @border-radius-small    : 0px;
 
@@ -16,6 +16,9 @@
 
 @tooltip-bg             : @body-background;
 
+html,body {
+  height: 100%;
+}
 div {
   line-height: 0;
 }
@@ -38,6 +41,15 @@ div {
   &-footer {
     border: none;
     text-align: center;
+  }
+}
+
+.vertical-center-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .@{modal-prefix-cls} {
+    top: 0;
   }
 }
 .@{spin-prefix-cls} {

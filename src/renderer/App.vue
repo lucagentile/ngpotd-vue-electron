@@ -37,8 +37,4 @@
 </script>
 
 <style scoped>
-  .layout-content{
-    height: 100%;
-    margin: 15px;
-  }
 </style>
