@@ -104,7 +104,8 @@ ipcMain.on('image:index', (event) => {
       console.log(err)
     }
     let images = []
-    for (let i = 0; i < items.length; i++) {
+    let i = items.length
+    while (i--) {
       let imagePath = picturesPath + path.sep + items[i]
       let data = fs.readFileSync(imagePath)
       let image = {
