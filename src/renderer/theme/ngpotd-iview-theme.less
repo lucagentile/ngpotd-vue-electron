@@ -16,11 +16,21 @@
 
 @tooltip-bg             : @body-background;
 
+// General styles
 html,body {
   height: 100%;
 }
 div {
-  line-height: 0;
+    line-height: 0;
+}
+#webpack-hot-middleware-clientOverlay, #webpack-hot-middleware-clientOverlay div {
+  line-height: 1.2em!important;
+}
+// No text selection
+body {
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
 }
 .@{btn-prefix-cls} {
   margin: 0;
