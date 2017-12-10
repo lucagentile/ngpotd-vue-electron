@@ -1,6 +1,6 @@
 <template>
   <div class="mg-rx-40">
-    <Button type="primary" @click="startDownload" :disabled="this.isDownloading" size="large">{{ $t("input.download") }}</Button>
+    <Button type="primary" @click="startDownload" :disabled="canDownload" size="large">{{ $t("input.download") }}</Button>
   </div>
 </template>
 
@@ -12,7 +12,10 @@
     computed: {
       ...mapGetters({
         isDownloading: types.GET_IS_DOWNLOADING
-      })
+      }),
+      canDownload () {
+        return this.isDownloading && navigator.onLine
+      }
     },
     methods: {
       ...mapActions({
