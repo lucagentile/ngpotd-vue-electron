@@ -28,13 +28,19 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 750,
-    useContentSize: true,
-    width: 750
+    minWidth: 850,
+    minHeight: 650,
+    frame: false,
+    resizable: true,
+    show: false,
+    backgroundColor: '#222222'
   })
 
   mainWindow.loadURL(winURL)
-
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.maximize()
+    mainWindow.show()
+  })
   mainWindow.on('closed', () => {
     mainWindow = null
   })
