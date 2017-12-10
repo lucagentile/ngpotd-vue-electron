@@ -1,6 +1,8 @@
 <template>
   <div class="mg-rx-40">
-    <Button type="primary" @click="startDownload" :disabled="this.isDownloading" size="large">{{ $t("input.download") }}</Button>
+    <Tooltip placement="left" :content="tooltipOnline" :disabled="!cantDownload">
+      <Button type="primary" @click="startDownload" :disabled="cantDownload" size="large">{{ $t("input.download") }}</Button>
+    </Tooltip>
   </div>
 </template>
 
@@ -12,12 +14,28 @@
     computed: {
       ...mapGetters({
         isDownloading: types.GET_IS_DOWNLOADING
-      })
+      }),
+      cantDownload () {
+        return !this.isOnline || this.isDownloading
+      }
+    },
+    data () {
+      return {
+        tooltipOnline: this.$i18n.t(''),
+        isOnline: navigator.onLine
+      }
     },
     methods: {
       ...mapActions({
         startDownload: types.START_DOWNLOAD
-      })
+      }),
+      updateConnectionStatus () {
+        this.isOnline = navigator.onLine
+      }
+    },
+    created () {
+      window.addEventListener('online', this.updateConnectionStatus)
+      window.addEventListener('offline', this.updateConnectionStatus)
     }
   }
 </script>

@@ -2,7 +2,7 @@
     <div class="titlebar">
         <Row type="flex" align="middle">
             <Col span="8">
-                <button type="text" class="app-menu"><Icon type="android-menu"></Icon></button>
+                <button type="text" class="app-menu" v-on:click="openMenu"><Icon type="android-menu"></Icon></button>
                 <p class="title">NGPOTD - Wallpaper Changer</p>
             </Col>
             <Col span="8" offset="8">
@@ -20,6 +20,10 @@
   export default {
     name: 'titlebar',
     methods: {
+      openMenu () {
+        let remote = this.$electron.remote
+        remote.Menu.getApplicationMenu().popup(remote.getCurrentWindow())
+      },
       closeApp () {
         let window = this.$electron.remote.getCurrentWindow()
         window.close()

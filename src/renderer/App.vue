@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="layout">
-    <titlebar></titlebar>
+    <titlebar v-if="isNotDarwin"></titlebar>
     <div class="layout-content">
       <router-view></router-view>
     </div>
@@ -19,7 +19,10 @@
     computed: {
       ...mapGetters({
         isDownloading: types.GET_IS_DOWNLOADING
-      })
+      }),
+      isNotDarwin () {
+        return this.$electron.remote.getGlobal('process').env !== 'darwin'
+      }
     },
     methods: {
       ...mapActions({
