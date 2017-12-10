@@ -27,6 +27,9 @@ const messages = {
     input: {
       download: 'Download'
     },
+    connection: {
+      no: 'No internet connection'
+    },
     message: {
       wallpaperSuccess: 'Wallpaper has been set',
       wallpaperError: 'An error has occured. Retry'
@@ -38,6 +41,9 @@ const messages = {
     },
     input: {
       download: 'Scarica'
+    },
+    connection: {
+      no: 'Nessuna connessione a internet'
     },
     message: {
       wallpaperSuccess: 'Lo sfondo è stato impostato',
