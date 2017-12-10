@@ -8,7 +8,8 @@
            cancel-text="No"
            @on-ok="setWallpaper"
            @on-cancel="dontSetWallpaper"
-           class-name="vertical-center-modal">
+           class-name="vertical-center-modal"
+           width="60%">
       <img :src="imageToSet.url" width="100%">
     </Modal>
   </div>

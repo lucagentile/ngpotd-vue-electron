@@ -28,13 +28,19 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 750,
-    useContentSize: true,
-    width: 750
+    minWidth: 850,
+    minHeight: 650,
+    frame: false,
+    resizable: true,
+    show: false,
+    backgroundColor: '#222222'
   })
 
   mainWindow.loadURL(winURL)
-
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.maximize()
+    mainWindow.show()
+  })
   mainWindow.on('closed', () => {
     mainWindow = null
   })
@@ -104,7 +110,8 @@ ipcMain.on('image:index', (event) => {
       console.log(err)
     }
     let images = []
-    for (let i = 0; i < items.length; i++) {
+    let i = items.length
+    while (i--) {
       let imagePath = picturesPath + path.sep + items[i]
       let data = fs.readFileSync(imagePath)
       let image = {
