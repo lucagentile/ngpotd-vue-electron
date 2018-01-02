@@ -4,8 +4,6 @@
            :showHead="false"
            :maskClosable="false"
            :closable="false"
-           ok-text="Ok"
-           cancel-text="No"
            @on-ok="setWallpaper"
            @on-cancel="dontSetWallpaper"
            class-name="vertical-center-modal"
