@@ -16,7 +16,7 @@ import VueMasonry from 'vue-masonry-css'
 
 Vue.use(VueMasonry)
 Vue.use(VueI18n)
-Vue.use(iView)
+Vue.use(iView, { locale: en })
 Vue.locale = () => {}
 
 const messages = {

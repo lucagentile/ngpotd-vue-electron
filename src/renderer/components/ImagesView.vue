@@ -8,7 +8,7 @@
         <downloader-view></downloader-view>
       </Col>
     </Row>
-    <masonry :cols="3" :gutter="0">
+    <masonry id="masonry" :cols="3" :gutter="0">
       <div v-for="(image, index) in images" :key="index">
         <img :src="image.url" width="100%" v-on:click="askToSetWallpaper" :data-name="image.name">
       </div>
@@ -43,4 +43,8 @@
 </script>
 
 <style scoped>
+  #masonry {
+    max-height: calc(100vh - 92px - 30px);
+    overflow-y: scroll;
+  }
 </style>
