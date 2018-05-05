@@ -5,7 +5,8 @@ const state = {
   images: [],
   imageToSet: {},
   page: 0,
-  pageSize: 18
+  pageSize: 18,
+  count: 0
 }
 
 const getters = {
@@ -16,12 +17,15 @@ const getters = {
     return state.images
   },
   [types.GET_IMAGES_COUNT]: (state) => {
-    return state.images.length
+    return state.count
   },
   [types.GET_IMAGES_PAGE]: (state) => {
     const start = state.pageSize * state.page
     const end = (state.page + 1) * state.pageSize
     return state.images.slice(start, end)
+  },
+  [types.GET_IMAGES_CURRENTPAGE]: (state) => {
+    return state.page
   },
   [types.GET_IMAGE_TO_SET]: (state) => {
     return state.imageToSet
@@ -37,6 +41,9 @@ const mutations = {
   },
   [types.SET_PAGE]: (state, page) => {
     state.page = page
+  },
+  [types.SET_IMAGES_COUNT]: (state, count) => {
+    state.count = count
   }
 }
 
@@ -59,6 +66,9 @@ const actions = {
   },
   [types.SET_PAGE]: ({ state, commit }, page) => {
     commit(types.SET_PAGE, page)
+  },
+  [types.SET_IMAGES_COUNT]: ({ state, commit }, count) => {
+    commit(types.SET_IMAGES_COUNT, count)
   }
 }
 

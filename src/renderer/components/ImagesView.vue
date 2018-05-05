@@ -29,7 +29,7 @@
       ...mapGetters({
         pageSize: types.GET_PAGE_SIZE,
         imagesCount: types.GET_IMAGES_COUNT,
-        images: types.GET_IMAGES_PAGE
+        images: types.GET_IMAGES
       })
     },
     methods: {
@@ -43,6 +43,11 @@
       },
       onChangePage (page) {
         this.setPage(parseInt(page) - 1)
+        const pagination = {
+          pageSize: this.pageSize,
+          page: parseInt(page) - 1
+        }
+        this.$electron.ipcRenderer.send('image:index', pagination)
       }
     },
     components: {

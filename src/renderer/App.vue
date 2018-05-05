@@ -18,7 +18,9 @@
     name: 'ngpotd-electron-vue',
     computed: {
       ...mapGetters({
-        isDownloading: types.GET_IS_DOWNLOADING
+        isDownloading: types.GET_IS_DOWNLOADING,
+        pageSize: types.GET_PAGE_SIZE,
+        page: types.GET_IMAGES_CURRENTPAGE
       }),
       isNotDarwin () {
         return this.$electron.remote.getGlobal('process').env !== 'darwin'
@@ -26,14 +28,24 @@
     },
     methods: {
       ...mapActions({
-        pushImage: types.PUSH_IMAGE
+        pushImage: types.PUSH_IMAGE,
+        setImageCount: types.SET_IMAGES_COUNT
       })
     },
     beforeCreate () {
-      this.$electron.ipcRenderer.send('image:index')
-      this.$electron.ipcRenderer.on('image:push', (event, image) => {
-        this.pushImage(image)
+      this.$electron.ipcRenderer.on('images:count', (event, count) => {
+        this.setImageCount(count)
       })
+      this.$electron.ipcRenderer.on('images:push', (event, images) => {
+        this.pushImage(images)
+      })
+    },
+    created () {
+      const pagination = {
+        pageSize: this.pageSize,
+        page: this.page
+      }
+      this.$electron.ipcRenderer.send('image:index', pagination)
     },
     components: {
       WallpaperModal, Titlebar
