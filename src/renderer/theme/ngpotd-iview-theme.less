@@ -1,9 +1,10 @@
 @import '~iview/src/styles/index.less';
 @import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
 
-@font-family            : 'Josefin Sans', Helvetica, sans-serif;
-@primary-color          : #ffce00;
-@body-background        : #222222;
+@font-family              : 'Josefin Sans', Helvetica, sans-serif;
+@primary-color            : #ffce00;
+@body-background          : #222222;
+@body-background-lighten  : lighten(@body-background, 3%);
 
 @border-radius-base     : 0px;
 @border-radius-small    : 0px;
@@ -67,5 +68,31 @@ body {
   &-fix {
     top: 30px;
     background-color: rgba(0,0,0,.9);
+  }
+}
+.@{page-prefix-cls} {
+  &-prev,
+  &-next {
+    a {
+      color: #ccc;
+    }
+    background-color: @body-background-lighten;
+  }
+  &-disabled {
+    a {
+      color: #666;
+    }
+    background-color: @body-background;
+  }
+  &-simple &-simple-pager {
+    color: #ccc;
+    input {
+      background-color: @body-background;
+      color: @primary-color;
+      border: none;
+      &:hover {
+        background-color: @body-background-lighten;
+      }
+    }
   }
 }

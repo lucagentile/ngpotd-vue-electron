@@ -172,14 +172,20 @@ function NotImageException (message) {
 NotImageException.prototype = Object.create(Error.prototype)
 NotImageException.prototype.constructor = NotImageException
 
-ipcMain.on('image:index', (event) => {
+let pagination = {}
+
+ipcMain.on('image:index', (event, args) => {
   fs.readdir(picturesPath, (err, items) => {
-    if (err) {
-      console.log(err)
-    }
+    if (err) throw err
+    if (args) pagination = args
+    const start = pagination.pageSize * pagination.page
+    const end = (pagination.page + 1) * pagination.pageSize
     let images = []
-    let i = items.length
-    while (i--) {
+    mainWindow.webContents.send('images:count', items.length)
+    items = items.reverse()
+    items = items.slice(start, end)
+    let length = items.length
+    for (let i = 0; i < length; i++) {
       let imagePath = picturesPath + path.sep + items[i]
       let data = fs.readFileSync(imagePath)
       let image = {
@@ -189,7 +195,7 @@ ipcMain.on('image:index', (event) => {
       }
       images.push(image)
     }
-    mainWindow.webContents.send('image:push', images)
+    mainWindow.webContents.send('images:push', images)
   })
 })
 
@@ -201,8 +207,8 @@ ipcMain.on('wallpaper:set', (event, image) => {
   })
 })
 
-fs.watch(picturesPath, { encoding: 'buffer' }, (eventType, filename) => {
-  if (eventType) {
+fs.watch(picturesPath, (eventType) => {
+  if (eventType === 'rename') {
     ipcMain.emit('image:index')
   }
 })
