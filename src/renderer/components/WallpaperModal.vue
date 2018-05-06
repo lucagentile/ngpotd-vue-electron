@@ -39,7 +39,10 @@
         this.closeModal()
       },
       closeModal () {
-        this.setImageToSet({})
+        this.$Modal.remove()
+        setTimeout(() => {
+          this.setImageToSet({})
+        }, 500)
       }
     },
     mounted () {
