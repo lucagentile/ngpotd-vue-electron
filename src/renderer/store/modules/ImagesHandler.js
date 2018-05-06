@@ -5,7 +5,7 @@ const state = {
   images: [],
   imageToSet: {},
   page: 0,
-  pageSize: 18,
+  pageSize: 12,
   count: 0
 }
 
@@ -33,7 +33,7 @@ const getters = {
 }
 
 const mutations = {
-  [types.PUSH_IMAGE] (state, images) {
+  [types.PUSH_IMAGES] (state, images) {
     state.images = images
   },
   [types.SET_IMAGE_TO_SET] (state, image) {
@@ -48,11 +48,11 @@ const mutations = {
 }
 
 const actions = {
-  [types.PUSH_IMAGE] ({ commit }, images) {
+  [types.PUSH_IMAGES] ({ commit }, images) {
     images = images.map((image) => {
       return createImage(image)
     })
-    commit(types.PUSH_IMAGE, images)
+    commit(types.PUSH_IMAGES, images)
   },
   [types.SET_IMAGE_TO_SET] ({ commit }, image) {
     if (image.hasOwnProperty('data')) {

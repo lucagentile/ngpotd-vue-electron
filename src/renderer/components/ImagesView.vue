@@ -39,7 +39,7 @@
         setImageFromName: types.SET_IMAGE_FROM_NAME,
         setPage: types.SET_PAGE,
         setImageCount: types.SET_IMAGES_COUNT,
-        pushImage: types.PUSH_IMAGE
+        pushImages: types.PUSH_IMAGES
       }),
       askToSetWallpaper (event) {
         this.setImageFromName(event.target.getAttribute('data-name'))
@@ -50,6 +50,7 @@
           pageSize: this.pageSize,
           page: parseInt(page) - 1
         }
+        this.pushImages([])
         this.$electron.ipcRenderer.send('image:index', pagination)
       }
     },
@@ -61,7 +62,7 @@
         this.setImageCount(count)
       })
       this.$electron.ipcRenderer.on('images:push', (event, images) => {
-        this.pushImage(images)
+        this.pushImages(images)
       })
       const pagination = {
         pageSize: this.pageSize,
@@ -79,5 +80,20 @@
   }
   .pager {
     padding-bottom: 1rem;
+  }
+  @keyframes appearAndTranslateX {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  #masonry img {
+    animation-name: appearAndTranslateX;
+    animation-duration: 3s;
+    animation-timing-function: ease-in;
   }
 </style>
